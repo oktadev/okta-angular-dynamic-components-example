@@ -1,27 +1,95 @@
-# OktaAngularDynamicComponents
+# Angular Dynamic Components Example
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.0.4.
+This respository shows you how to load dynamic components in Angular and show components conditionally based on user claims. Please read Loading Components Dynamically in Angular to see how it was created.
 
-## Development server
+**Prerequisites**
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+* Node 14
+* Okta CLI
 
-## Code scaffolding
+> [Okta](https://developer.okta.com/) has Authentication and User Management APIs that reduce development time with instant-on, scalable user infrastructure. Okta's intuitive API and expert support make it easy for developers to authenticate, manage and secure users and roles in any application.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+* [Getting Started](#getting-started)
+* [Links](#links)
+* [Help](#help)
+* [License](#license)
 
-## Build
+## Getting Started
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+To run this example, run the following commands:
 
-## Running unit tests
+```bash
+git clone https://github.com/oktadev/okta-angular-dynamic-components-example.git
+cd okta-angular-dynamic-components-example
+npm ci
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Create an OIDC Application in Okta
 
-## Running end-to-end tests
+Create a free developer account with the following command using the [Okta CLI](https://cli.okta.com):
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```shell
+okta register
+```
 
-## Further help
+If you already have a developer account, use `okta login` to integrate it with the Okta CLI. 
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Provide the required information. Once you register, create a client application in Okta with the following command:
+
+```shell
+okta apps create
+```
+
+You will be prompted to select the following options:
+- Type of Application: **2: SPA**
+- Redirect URI: `http://localhost:4200/login/callback`
+- Logout Redirect URI: `http://localhost:4200`
+
+The application configuration will be printed to your screen:
+
+```shell
+Okta application configuration:
+Issuer:    https://<OKTA_DOMAIN>.okta.com/oauth2/default
+Client ID: <CLIENT_ID>
+```
+
+In Okta dashboard, navigate to **Directory** > **People** and populate "department" field for your user with either a `1` or `2`. Navigate to **Security** > **API** and add "department" custom claim to your application Authorization Server ID token by mapping it to `user.profile.department`. The tutorial walks you through this process.
+
+Update `src/app/app.module.ts` with your Okta settings.
+
+```ts
+const config = {
+  clientId: '{yourClientID}',
+  issuer: 'https://{yourOktaDomain}/oauth2/default',
+  redirectUri: window.location.origin + '/login/callback'
+}
+const oktaAuth = new OktaAuth(config);
+```
+
+Start the app by running
+
+```shell
+npm start
+```
+
+Run tests by running
+
+```shell
+npm run test
+```
+## Links
+
+This example uses the following open source libraries from Okta:
+
+* [Okta Angular SDK](https://github.com/okta/okta-angular)
+* [Okta CLI](https://github.com/okta/okta-cli)
+
+## Help
+
+Please post any questions as comments on the [blog post][blog], or visit our [Okta Developer Forums](https://devforum.okta.com/).
+
+## License
+
+Apache 2.0, see [LICENSE](LICENSE).
+
+[blog]: https://developer.okta.com/blog
