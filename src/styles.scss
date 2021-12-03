@@ -4,36 +4,23 @@
 @use '@angular/material' as mat;
 // Plus imports for other components in your app.
 
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
 @include mat.core();
 
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-$okta-angular-dynamic-components-primary: mat.define-palette(mat.$indigo-palette);
-$okta-angular-dynamic-components-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$theme: mat.define-light-theme(
+    mat.define-palette(mat.$light-blue-palette, 900, 600, 900),
+    mat.define-palette(mat.$light-green-palette),
+    mat.define-palette(mat.$deep-orange-palette, 400)
+);
 
-// The warn palette is optional (defaults to red).
-$okta-angular-dynamic-components-warn: mat.define-palette(mat.$red-palette);
-
-// Create the theme object. A theme consists of configurations for individual
-// theming systems such as "color" or "typography".
-$okta-angular-dynamic-components-theme: mat.define-light-theme((
-  color: (
-    primary: $okta-angular-dynamic-components-primary,
-    accent: $okta-angular-dynamic-components-accent,
-    warn: $okta-angular-dynamic-components-warn,
-  )
-));
-
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-@include mat.all-component-themes($okta-angular-dynamic-components-theme);
+@include mat.core-theme($theme);
+@include mat.toolbar-theme($theme);
+@include mat.button-theme($theme);
+@include mat.select-theme($theme);
+@include mat.menu-theme($theme);
+@include mat.card-theme($theme);
+@include mat.list-theme($theme);
 
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
+html, body { height: 100%; background-color: #feffff; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
