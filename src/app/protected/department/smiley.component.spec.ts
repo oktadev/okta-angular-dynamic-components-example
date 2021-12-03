@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatCardModule } from '@angular/material/card';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { SmileyComponent } from './smiley.component';
 
@@ -8,7 +10,11 @@ describe('SmileyComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SmileyComponent ]
+      declarations: [ SmileyComponent ],
+      imports: [
+        MatCardModule,
+        NoopAnimationsModule
+      ]
     })
     .compileComponents();
   });
@@ -16,6 +22,7 @@ describe('SmileyComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SmileyComponent);
     component = fixture.componentInstance;
+    component.data = {url: ''};
     fixture.detectChanges();
   });
 
