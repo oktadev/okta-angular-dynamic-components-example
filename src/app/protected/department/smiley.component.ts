@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { DynamicComponent } from './dynamic.component';
 
 @Component({
   selector: 'app-smiley',
@@ -10,11 +11,8 @@ import { Component, OnInit } from '@angular/core';
   styles: [
   ]
 })
-export class SmileyComponent implements OnInit {
+export class SmileyComponent implements DynamicComponent {
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

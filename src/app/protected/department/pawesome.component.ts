@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { DynamicComponent } from './dynamic.component';
 
 @Component({
   selector: 'app-pawesome',
@@ -10,11 +11,8 @@ import { Component, OnInit } from '@angular/core';
   styles: [
   ]
 })
-export class PawesomeComponent implements OnInit {
+export class PawesomeComponent implements DynamicComponent {
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }
