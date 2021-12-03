@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { OktaAuthStateService } from '@okta/okta-angular';
+import { AuthState } from '@okta/okta-auth-js';
+import { filter, map, take } from 'rxjs';
+import { MessageItem } from '../message';
+import { MessageService } from '../message.service';
 
 @Component({  
   selector: 'app-protected',  
@@ -12,7 +17,7 @@ import { Component, OnInit } from '@angular/core';
           </mat-list-option>
         </mat-selection-list>
       </main>
-      <app-department></app-department>  
+      <app-department [messages]="messages"></app-department>  
    </div>
    `,  
   styles: [`  
@@ -36,9 +41,18 @@ export class ProtectedComponent implements OnInit {
     'Set up the automation'
   ];
 
-  constructor() { }
+  public messages: MessageItem[] = [];
+
+  constructor(private _authStateService: OktaAuthStateService, private _messageService: MessageService) { }  
 
   ngOnInit(): void {
+    this._authStateService.authState$.pipe(  
+      filter((s: AuthState) => !!s && !!s.isAuthenticated),  
+      map((s: AuthState) => +s.idToken?.claims['department'] ?? 0),  
+      take(1)  
+    ).subscribe(  
+      (d: number) => this.messages = this._messageService.getMessages(d)  
+    );  
   }
 
 }
